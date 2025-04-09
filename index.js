@@ -21,10 +21,12 @@ app.use((req, res, next) => {
     `-----
 ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
   );
-  // if (Object.keys(req.body).length > 0) {
-  //   console.log("Containing the data:");
-  //   console.log(`${JSON.stringify(req.body)}`);
-  // }
+  if(req.body){
+    if (Object.keys(req.body).length > 0) {
+      console.log("Containing the data:");
+      console.log(`${JSON.stringify(req.body)}`);
+    }
+  }
   next();
 });
 
@@ -37,6 +39,7 @@ apiKeys = ["perscholas", "ps-example", "hJAsknw-L198sAJD-l3kasx"];
 // This is why we attached the /api/ prefix
 // to our routing at the beginning!
 app.use("/api", function (req, res, next) {
+  console.log(req.query)
   var key = req.query["api-key"];
 
   // Check for the absence of a key.
