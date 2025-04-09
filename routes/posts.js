@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
+const users = require("../data/users")
 const posts = require("../data/posts");
 const error = require("../utilities/error");
 
 router
   .route("/")
   .get((req, res) => {
+    const userId = req.query["userId"]
     const links = [
       {
         href: "posts/:id",
@@ -14,8 +15,12 @@ router
         type: "GET",
       },
     ];
-
-    res.json({ posts, links });
+    if(!userId){
+      res.json({ posts, links });
+      } else {
+      const userPosts = posts.filter((post) => post.userId == userId)
+      res.json(userPosts)
+    }
   })
   .post((req, res, next) => {
     if (req.body.userId && req.body.title && req.body.content) {
