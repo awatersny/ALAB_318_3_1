@@ -8,6 +8,7 @@ const error = require("../utilities/error");
 router
   .route("/")
   .get((req, res) => {
+    const userId = req.query["userId"]
     const links = [
       {
         href: "users/:id",
@@ -15,8 +16,12 @@ router
         type: "GET",
       },
     ];
-
-    res.json({ comments, links });
+    if(!userId){
+      res.json({ comments, links });
+    } else {
+      const userComments = comments.filter(comment => comment.userId == userId)
+      res.json(userComments)
+    }
   })
 
 router
