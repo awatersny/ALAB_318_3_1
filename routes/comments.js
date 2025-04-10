@@ -19,4 +19,11 @@ router
     res.json({ comments, links });
   })
 
+router
+  .route("/:id")
+  .get((req, res)=>{
+    const comment = comments.find(comment => comment.id == req.params.id)
+    res.json(comment)
+  })
+
 module.exports = router;
