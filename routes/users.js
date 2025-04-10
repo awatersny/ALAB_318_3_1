@@ -54,7 +54,10 @@ router
     ];
 
     if (user) res.json({ user, links });
-    else next();
+    else {
+      res.json({error: "User not found"})
+      next();
+    }
   })
   .patch((req, res, next) => {
     const user = users.find((u, i) => {
